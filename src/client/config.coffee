@@ -12,8 +12,8 @@ module.exports =
   gravity: 600
 
   camera:
-    slack: 40
-    delay: 0.5
+    slack: 50
+    delay: 80
 
   player:
     mass: 10

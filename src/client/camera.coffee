@@ -18,7 +18,7 @@ class FollowCamera extends Phaser.Sprite
   update: ->
     return unless @target?
     dx = @position.distance @target
-    speed = (dx > config.camera.slack) and (dx / config.camera.delay)
+    speed = (dx > config.camera.slack) and (dx**2 / config.camera.delay)
     @game.physics.arcade.moveToObject(this, @target, speed)
 
 module.exports = FollowCamera
