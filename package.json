@@ -1,8 +1,14 @@
 {
   "name": "wikigame",
   "version": "0.0.0",
-  "description": "Platformer where you jump around on Wikipedia pages.",
+  "private": true,
   "author": "Aaron Graham-Horowitz <aaron@aaronsgh.com>",
+  "description": "Tiny person explores wiki pages.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aaronsgh/wikigame.git"
+  },
+  "license": "MIT",
   "browserify-shim": {
     "phaser": "global:Phaser"
   },
