@@ -19,6 +19,8 @@ class Word extends Phaser.Text
 
     super(game, x, y, text, style)
 
+    @link = word.link
+
     @game.physics.arcade.enable this
     @body.allowGravity = false
     @body.immovable = true

@@ -7,7 +7,7 @@ Phaser = require "phaser"
 # collisions.
 ###
 
-config = require './config.coffee'
+{spacing} = require './config.coffee'
 {type} = require '../shared.coffee'
 Word = require './word.coffee'
 Player = require './player.coffee'
@@ -21,39 +21,48 @@ class Game extends Phaser.State
     return
 
   create: ->
-    # Platform setup
     @platforms = @add.group()
+    @movers = @add.group()
 
-    x = y = config.spacing.padding
+    x = y = spacing.padding
     pre = false
     for word in @words
       # Special case, NEWLINE does not generate text
       if word.t is type.NEWLINE
-        x = config.spacing.padding
-        y += config.spacing.paragraph / 2
+        x = spacing.padding
+        y += spacing.paragraph / 2
         continue
       # Handle punctuation
       if pre or word.t is type.POST
-        x -= config.spacing.word
-      else if x > config.spacing.length
-        x = config.spacing.padding
-        y += config.spacing.line
+        x -= spacing.word
+      else if x > spacing.length
+        x = spacing.padding
+        y += spacing.line
       pre = word.t is type.PRE
       # Create text
       w = @add.existing(new Word(@game, x, y, word))
       @platforms.add w
-      x += w.width + config.spacing.word
+      x += w.width + spacing.word
 
-    @world.resize(config.spacing.length + 2 * config.spacing.padding,
-                  w.bottom + config.spacing.padding)
+    @world.resize(spacing.length + 2 * spacing.padding,
+                  w.bottom + spacing.padding)
 
     # Player setup
     @player = @add.existing(
-      new Player(@game, config.spacing.padding + 32, 0, 'player')
+      new Player(@game, spacing.padding + 32,
+                        spacing.padding - 48 * 2,
+                        'player')
     )
+    @movers.add @player
+
     @focus = @add.existing(new FollowCamera(@game, @player))
 
   update: ->
-    @physics.arcade.collide(@player, @platforms)
+    @physics.arcade.collide(@movers, @platforms, (mover, platform) ->
+      if platform.onCollision?
+        platform.onCollision mover
+      if mover.onPlatform?
+        mover.onPlatform platform
+    )
 
 module.exports = Game
