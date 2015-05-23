@@ -4,15 +4,15 @@ Phaser = require "phaser"
 # Class for player sprite. Handles user input.
 ###
 
-config = require './config.coffee'
+{playerCfg} = require './config.coffee'
 
 class Player extends Phaser.Sprite
 
   constructor: (game, x, y) ->
     super(game, x, y, 'player')
     @game.physics.arcade.enable this
-    @body.mass = config.player.mass
-    @body.bounce.y = config.player.bounce
+    @body.mass = playerCfg.mass
+    @body.bounce.y = playerCfg.bounce
     @body.collideWorldBounds = true
 
     @body.setSize(28, 40, 2, 8)
@@ -26,10 +26,10 @@ class Player extends Phaser.Sprite
     @body.velocity.x = 0
     switch
       when @game.cursors.left.isDown
-        @body.velocity.x = -1 * config.player.speed
+        @body.velocity.x = -1 * playerCfg.speed
         @animations.play 'left'
       when @game.cursors.right.isDown
-        @body.velocity.x = config.player.speed
+        @body.velocity.x = playerCfg.speed
         @animations.play 'right'
       else
         @animations.stop()
@@ -37,6 +37,6 @@ class Player extends Phaser.Sprite
 
     # Jump
     if @game.cursors.up.isDown and standing
-      @body.velocity.y = -1 * config.player.jumpHeight
+      @body.velocity.y = -1 * playerCfg.jumpHeight
 
 module.exports = Player
