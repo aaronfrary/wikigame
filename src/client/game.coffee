@@ -21,11 +21,15 @@ class Game extends Phaser.State
     return
 
   create: ->
-    @platforms = @add.group()
-    @movers = @add.group()
-
+    # Platforms setup
+    # TODO: clean up this code
     x = y = spacing.padding
     pre = false
+    @blocks = []
+    block =
+      group: @add.group()
+      visible: true
+      top: y
     for word in @words
       # Special case, NEWLINE does not generate text
       if word.t is type.NEWLINE
@@ -38,31 +42,59 @@ class Game extends Phaser.State
       else if x > spacing.length
         x = spacing.padding
         y += spacing.line
+      if y > spacing.blockSize * (@blocks.length + 1)
+        block.bottom = y
+        @blocks.push block
+        block =
+          group: new Phaser.Group(@game, null)
+          visible: false
+          top: y
       pre = word.t is type.PRE
       # Create text
-      w = @add.existing(new Word(@game, x, y, word))
-      @platforms.add w
+      w = new Word(@game, x, y, word)
+      block.group.add w
       x += w.width + spacing.word
+    block.bottom = y
+    @blocks.push block
 
     @world.resize(spacing.length + 2 * spacing.padding,
                   w.bottom + spacing.padding)
 
     # Player setup
-    @player = @add.existing(
-      new Player(@game, spacing.padding + 32,
-                        spacing.padding - 48 * 2,
-                        'player')
-    )
+    @movers = @add.group()
+    @player = new Player(@game, spacing.padding + 32,
+                                spacing.padding - 48,
+                                'player')
     @movers.add @player
 
+    # Camera setup
     @focus = @add.existing(new FollowCamera(@game, @player))
 
+    # Get some stats
+    console.log @blocks.length
+
   update: ->
-    @physics.arcade.collide(@movers, @platforms, (mover, platform) ->
-      if platform.onCollision?
-        platform.onCollision mover
-      if mover.onPlatform?
-        mover.onPlatform platform
-    )
+    # Lazy Rendering
+    top = @camera.y
+    bottom = top + @camera.height
+    top = Math.min(top, @player.body.top)
+    bottom = Math.max(bottom, @player.body.bottom)
+
+    for block in @blocks
+      if block.top <= bottom or block.bottom >= top
+        @world.add block.group unless block.visible
+        block.visible = true
+      else
+        @world.remove block.group if block.visible
+        block.visible = false
+
+    # Collide
+    for block in @blocks when block.visible
+      @physics.arcade.collide(@movers, block.group, (mover, platform) ->
+        if platform.onCollision?
+          platform.onCollision mover
+        if mover.onPlatform?
+          mover.onPlatform platform
+      )
 
 module.exports = Game
