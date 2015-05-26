@@ -111,8 +111,4 @@ class Game extends Phaser.State
           mover.onPlatform platform
       )
 
-  render: ->
-    if debug
-      @game.debug.text(@time.fps or '--', 2, 14, '#00ff00')
-
 module.exports = Game
