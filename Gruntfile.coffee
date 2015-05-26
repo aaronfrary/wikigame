@@ -1,72 +1,48 @@
 module.exports = (grunt) ->
   require('load-grunt-tasks')(grunt)
 
-  grunt.registerTask('default', ['concurrent:compile'])
-  grunt.registerTask('run', ['concurrent:compile', 'concurrent:dev'])
-  grunt.registerTask('client', ['coffeelint:client', 'clean:client', 'browserify:client'])
-  grunt.registerTask('server', ['coffeelint:server', 'clean:server', 'coffee:server'])
+  grunt.registerTask('default', ['app'])
+  grunt.registerTask('app', ['coffeelint', 'clean', 'browserify'])
+  grunt.registerTask('run', ['connect', 'app', 'watch'])
 
   grunt.initConfig {
     pkg: grunt.file.readJSON 'package.json'
-    servdir: './server'
-    distdir: './server/public'
-
-    concurrent:
-      compile:
-        tasks: ['client', 'server']
-        options:
-          logConcurrentOutput: true
-      dev:
-        tasks: ['nodemon', 'watch']
-        options:
-          logConcurrentOutput: true
+    distdir: './public'
 
     browserify:
-      client:
-        src: ['./src/client/app.coffee']
+      app:
+        src: ['./src/app.coffee']
         dest: '<%= distdir %>/<%= pkg.name %>.js'
         options:
           transform: ['coffeeify', 'browserify-shim']
 
-    coffee:
-      server:
-        expand: true
-        flatten: true
-        cwd: './src'
-        src: ['*.coffee', './server/*.coffee']
-        dest: '<%= servdir %>'
-        ext: '.js'
-
-    clean:
-      client: ['<%= distdir %>/*.js']
-      server: ['<%= servdir %>/*.js']
-
-    nodemon:
-      dev:
-        script: 'server.js'
-        options:
-          cwd: '<%= servdir %>'
-          ignore: './public'
-
     watch:
       options:
         cwd: './src'
-        spawn: false
-      client:
-        files: ['*.coffee', './client/*.coffee']
-        tasks: ['coffeelint:client', 'browserify:client']
-      server:
-        files: ['*.coffee', './server/*.coffee']
-        tasks: ['coffeelint:server', 'coffee:server']
+        livereload: true
+        nospawn: true
+      app:
+        files: ['*.coffee']
+        tasks: ['coffeelint', 'browserify']
+
+    clean:
+      app: ['<%= distdir %>/*.js']
 
     coffeelint:
-      client: ['./src/client/*.coffee']
-      server: ['./src/server/*.coffee', './src/shared.coffee']
+      app: ['./src/*.coffee']
       options:
         no_empty_functions: {level: 'warn'}
         no_stand_alone_at: {level: 'warn'}
         missing_fat_arrows: {level: 'warn'}
 
+    connect:
+      app:
+        options:
+          port: 8585
+          hostname: '0.0.0.0'
+          base: '<%= distdir %>'
+          middleware: (connect, options) ->
+            [require('connect-livereload')(), connect.static(options.base[0])]
   }
 
   # Only lint changed files
