@@ -3,8 +3,11 @@ Phaser = require "phaser"
 ###
 # Main game state.
 #
-# Builds page from list of word objects, creates player, and checks for
-# collisions.
+# Builds page from list of word objects, separating them into fixed size
+# "blocks" that are only rendered and processed when part of the block is on
+# screen. Also creates player and sets up camera.
+#
+# Handles collisions and lazy rendering of blocks.
 ###
 
 {spacing} = require './config.coffee'
@@ -21,44 +24,48 @@ class Game extends Phaser.State
     return
 
   create: ->
-    # Platforms setup
-    # TODO: clean up this code
+    # Platforms setup {{{
     x = y = spacing.padding
-    pre = false
+    lastType = null
     @blocks = []
+    # First block
     block =
       group: @add.group()
-      visible: true
+      onScreen: true
       top: y
     for word in @words
-      # Special case, NEWLINE does not generate text
+      # NEWLINE does not generate text
       if word.t is type.NEWLINE
         x = spacing.padding
         y += spacing.paragraph / 2
         continue
-      # Handle punctuation
-      if pre or word.t is type.POST
+      # No spacing between word and punctuation
+      if lastType is type.PRE or word.t is type.POST
         x -= spacing.word
+      # Consider line break
       else if x > spacing.length
         x = spacing.padding
         y += spacing.line
+      # Consider block break
       if y > spacing.blockSize * (@blocks.length + 1)
         block.bottom = y
         @blocks.push block
         block =
           group: new Phaser.Group(@game, null)
-          visible: false
+          onScreen: false
           top: y
-      pre = word.t is type.PRE
       # Create text
       w = new Word(@game, x, y, word)
       block.group.add w
       x += w.width + spacing.word
+      lastType = word.t
+    # Wrap up
     block.bottom = y
     @blocks.push block
 
     @world.resize(spacing.length + 2 * spacing.padding,
                   w.bottom + spacing.padding)
+    # }}}
 
     # Player setup
     @movers = @add.group()
@@ -82,14 +89,14 @@ class Game extends Phaser.State
 
     for block in @blocks
       if block.top <= bottom or block.bottom >= top
-        @world.add block.group unless block.visible
-        block.visible = true
+        @world.add block.group unless block.onScreen
+        block.onScreen = true
       else
-        @world.remove block.group if block.visible
-        block.visible = false
+        @world.remove block.group if block.onScreen
+        block.onScreen = false
 
-    # Collide
-    for block in @blocks when block.visible
+    # Collisions
+    for block in @blocks when block.onScreen
       @physics.arcade.collide(@movers, block.group, (mover, platform) ->
         if platform.onCollision?
           platform.onCollision mover

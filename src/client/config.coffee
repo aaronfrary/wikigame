@@ -19,7 +19,7 @@ module.exports =
     mass: 10
     speed: 240
     jumpHeight: 420
-    bounce: 0.12
+    bounce: 0
 
   wordCfg:
     defaultStyle:
