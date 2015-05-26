@@ -1,7 +1,7 @@
 # Wikigame
 
 Have you ever dreamed of being a tiny person who can run around in web pages
-and jumpt through hyperlinks? Now you can!
+and jump through hyperlinks? Now you can!
 
 This is a rewrite of one of my
 [earliest attempts] (https://github.com/aaronsgh/escape-from-wikipedia)
