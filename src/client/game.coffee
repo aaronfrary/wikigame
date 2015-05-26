@@ -10,8 +10,7 @@ Phaser = require "phaser"
 # Handles collisions and lazy rendering of blocks.
 ###
 
-{spacing} = require './config.coffee'
-{type} = require '../shared.coffee'
+{spacing, type} = require './config.coffee'
 Word = require './word.coffee'
 Player = require './player.coffee'
 FollowCamera = require './camera.coffee'

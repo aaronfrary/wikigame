@@ -5,6 +5,7 @@ Phaser = require 'phaser'
 ###
 
 config = require './config.coffee'
+wikipedia = require './wikipedia.coffee'
 
 class LoadPage extends Phaser.State
   constructor: -> super
@@ -18,13 +19,10 @@ class LoadPage extends Phaser.State
                                        @game.world.centerY - 16,
                                        'preloadBar')
 
-    @load.json('page', './?q=' + @pageTitle)
-
   create: ->
-    page = @cache.getJSON 'page'
-    @cache.removeJSON 'page'
-
-    @state.start('Game', true, false, page)
+    wikipedia.getPage(@pageTitle, (page) =>
+      @state.start('Game', true, false, page)
+    )
 
 module.exports = LoadPage
 

@@ -1,4 +1,4 @@
-{type} = require './shared.js'
+{type} = require './config.coffee'
 
 ###
 # Parse a limited subset of wikitext markup into JSON.

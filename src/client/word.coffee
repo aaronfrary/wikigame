@@ -4,8 +4,7 @@ Phaser = require "phaser"
 # Generates a solid text sprite from a word object.
 ###
 
-{type} = require '../shared.coffee'
-{wordCfg} = require './config.coffee'
+{wordCfg, type} = require './config.coffee'
 
 class Word extends Phaser.Text
 
