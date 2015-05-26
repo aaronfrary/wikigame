@@ -7,6 +7,8 @@ module.exports =
   height: 640
   pack: 'assets/pack.json'
 
+  debug: true
+
   startPage: 'Cruft'
 
   gravity: 600

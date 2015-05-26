@@ -10,7 +10,7 @@ Phaser = require "phaser"
 # Handles collisions and lazy rendering of blocks.
 ###
 
-{spacing, type} = require './config.coffee'
+{spacing, type, debug} = require './config.coffee'
 Word = require './word.coffee'
 Player = require './player.coffee'
 FollowCamera = require './camera.coffee'
@@ -77,7 +77,15 @@ class Game extends Phaser.State
     @focus = @add.existing(new FollowCamera(@game, @player))
 
     # Get some stats
-    console.log @blocks.length
+    console.log(switch @game.renderType
+      when Phaser.CANVAS
+        "Canvas"
+      when Phaser.WEBGL
+        "WebGL"
+      else
+        "Other"
+    )
+    console.log @blocks.length + " blocks"
 
   update: ->
     # Lazy Rendering
@@ -102,5 +110,9 @@ class Game extends Phaser.State
         if mover.onPlatform?
           mover.onPlatform platform
       )
+
+  render: ->
+    if debug
+      @game.debug.text(@time.fps or '--', 2, 14, '#00ff00')
 
 module.exports = Game

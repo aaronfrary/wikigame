@@ -18,6 +18,7 @@ class Preload extends Phaser.State
     # Set up game defaults
     @stage.backgroundColor = '#fff'
     @game.renderer.renderSession.roundPixels = true
+    @time.advancedTiming = config.debug
 
     @physics.startSystem Phaser.Physics.ARCADE
     @physics.arcade.gravity.y = config.gravity
