@@ -17,6 +17,7 @@ class Game extends Phaser.State
 
   init: (@blocks) ->
     console.log @blocks.length + ' blocks'
+    @blocksOnScreen = 0
     return
 
   create: ->
@@ -32,11 +33,11 @@ class Game extends Phaser.State
     # Lazy Rendering
     top = @camera.y
     bottom = top + @camera.height
-    top = Math.min(top, @player.body.top)
+    top = Math.min(top, @player.body.y)
     bottom = Math.max(bottom, @player.body.bottom)
 
     for block in @blocks
-      if block.top <= bottom or block.bottom >= top
+      if bottom >= block.top and top <= block.bottom
         @world.add block.group unless block.onScreen
         block.onScreen = true
       else
