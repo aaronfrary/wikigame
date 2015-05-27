@@ -10,6 +10,7 @@ module.exports =
   debug: true
 
   startPage: 'Cruft'
+  tagline: 'From Wikipedia, the free encyclopedia'
 
   gravity: 600
 
@@ -28,9 +29,12 @@ module.exports =
       font: 'Sans-Serif'
       fontSize: 24
       fill: '#000'
-    title3: 28
-    title2: 32
-    title1: 40
+    size:
+      note: 16
+      t3: 28
+      t2: 32
+      t1: 40
+      t0: 48
     linkColor:
       blue:      '#0645AD'
       darkBlue:  '#0B0080'
@@ -54,8 +58,10 @@ module.exports =
     POST:    3
     WORD:    4
     LINK:    5
-    TITLE1:  6
-    TITLE2:  7
-    TITLE3:  8
-    BOLD:    9
-    ITAL:    10
+    TITLE0:  6
+    TITLE1:  7
+    TITLE2:  8
+    TITLE3:  9
+    BOLD:    10
+    ITAL:    11
+    NOTE:    12

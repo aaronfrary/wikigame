@@ -27,7 +27,7 @@ module.exports =
           "&titles=#{title}&prop=revisions&rvprop=content&continue=" +
           "&format=json&formatversion=2"
     onload = (data) ->
-      content = wikitext.parse data.query.pages[0].revisions[0].content
+      content = wikitext.parse(title, data.query.pages[0].revisions[0].content)
       callback content
     getJSONP(url, onload)
 

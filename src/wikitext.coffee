@@ -1,4 +1,4 @@
-{type} = require './config.coffee'
+{type, tagline} = require './config.coffee'
 
 ###
 # Parse a limited subset of wikitext markup into JSON.
@@ -66,11 +66,15 @@ re = /// ^ \s* (?:
   | (\S* [^\s#{punc}])        # word
 ) ///
 
-parse = (text) ->
+parse = (title, text) ->
   # Break down by paragraph / section
   sections = (preprocess text).split '\n'
 
-  tokens = []
+  tokens = (parseText type.TITLE0, title)
+  tokens.push {t: type.NEWLINE}
+  tokens = tokens.concat (parseText type.NOTE, tagline)
+  tokens.push {t: type.NEWLINE}
+
   for sec in sections
     # Iteratively match chunks of text
     pos = 0

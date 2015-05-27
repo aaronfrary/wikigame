@@ -19,13 +19,18 @@ class Word extends Phaser.Text
       style.fontStyle = 'italic'
     if word.t is type.BOLD
       style.fontWeight = 'bold'
+    if word.t is type.NOTE
+      style.fontSize = wordCfg.size.note
+    if word.t is type.TITLE0
+      style.font = 'Serif'
+      style.fontSize = wordCfg.size.t0
     if word.t is type.TITLE1
       style.font = 'Serif'
-      style.fontSize = wordCfg.title1
+      style.fontSize = wordCfg.size.t1
     if word.t is type.TITLE2
-      style.fontSize = wordCfg.title2
+      style.fontSize = wordCfg.size.t2
     if word.t is type.TITLE3
-      style.fontSize = wordCfg.title3
+      style.fontSize = wordCfg.size.t3
 
     NEWLINE: 1
     PRE:     2
