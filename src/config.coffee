@@ -25,8 +25,12 @@ module.exports =
 
   wordCfg:
     defaultStyle:
-      fontSize: '24px'
+      font: 'Sans-Serif'
+      fontSize: 24
       fill: '#000'
+    title3: 28
+    title2: 32
+    title1: 40
     linkColor:
       blue:      '#0645AD'
       darkBlue:  '#0B0080'

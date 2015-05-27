@@ -15,6 +15,28 @@ class Word extends Phaser.Text
 
     if word.t is type.LINK
       style.fill = wordCfg.linkColor.blue
+    if word.t is type.ITAL
+      style.fontStyle = 'italic'
+    if word.t is type.BOLD
+      style.fontWeight = 'bold'
+    if word.t is type.TITLE1
+      style.font = 'Serif'
+      style.fontSize = wordCfg.title1
+    if word.t is type.TITLE2
+      style.fontSize = wordCfg.title2
+    if word.t is type.TITLE3
+      style.fontSize = wordCfg.title3
+
+    NEWLINE: 1
+    PRE:     2
+    POST:    3
+    WORD:    4
+    LINK:    5
+    TITLE1:  6
+    TITLE2:  7
+    TITLE3:  8
+    BOLD:    9
+    ITAL:    10
 
     super(game, x, y, text, style)
 
