@@ -26,7 +26,7 @@ class DrawPage extends Phaser.State
 
   create: ->
     @loadSprite = @add.sprite @game.camera.width/2 - 200,
-                              @game.camera.height/2 - 200,
+                              @game.camera.height/2 - 20,
                               'preloadBar'
     @loadSprite.fixedToCamera = true
     @loadWidth = @loadSprite.width
