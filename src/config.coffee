@@ -42,7 +42,7 @@ module.exports =
     word: 60
     line: 130
     paragraph: 200
-    blockSize: 1600
+    blockSize: 400
 
   type:
     NEWLINE: 1

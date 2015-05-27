@@ -11,8 +11,8 @@ class Preload extends Phaser.State
 
   preload: ->
     # Show loading screen
-    @load.setPreloadSprite(@add.sprite @game.world.centerX - 160,
-                                       @game.world.centerY - 16,
+    @load.setPreloadSprite(@add.sprite @game.world.centerX - 200,
+                                       @game.world.centerY - 20,
                                        'preloadBar')
 
     # Set up game defaults

@@ -9,6 +9,7 @@ Boot = require './boot.coffee'
 Preload = require './preload.coffee'
 Menu = require './menu.coffee'
 LoadPage = require './loadpage.coffee'
+DrawPage = require './drawpage.coffee'
 Game = require './game.coffee'
 
 if config.debug
@@ -21,5 +22,6 @@ game.state.add('Boot', Boot)
 game.state.add('Preload', Preload)
 game.state.add('Menu', Menu)
 game.state.add('LoadPage', LoadPage)
+game.state.add('DrawPage', DrawPage)
 game.state.add('Game', Game)
 game.state.start 'Boot'
