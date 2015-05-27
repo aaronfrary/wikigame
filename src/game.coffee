@@ -16,29 +16,17 @@ class Game extends Phaser.State
   constructor: -> super
 
   init: (@blocks) ->
+    console.log @blocks.length + ' blocks'
     return
 
   create: ->
-    # Player setup
     @movers = @add.group()
     @player = new Player(@game, spacing.padding + 32,
                                 spacing.padding - 48,
                                 'player')
     @movers.add @player
 
-    # Camera setup
     @focus = @add.existing(new FollowCamera(@game, @player))
-
-    # Get some stats
-    console.log(switch @game.renderType
-      when Phaser.CANVAS
-        "Canvas"
-      when Phaser.WEBGL
-        "WebGL"
-      else
-        "Other"
-    )
-    console.log @blocks.length + " blocks"
 
   update: ->
     # Lazy Rendering

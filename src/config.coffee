@@ -39,10 +39,10 @@ module.exports =
   spacing:
     length: 1500
     padding: 300
-    word: 60
+    word: 50
     line: 130
     paragraph: 200
-    blockSize: 400
+    blockSize: 200
 
   type:
     NEWLINE: 1

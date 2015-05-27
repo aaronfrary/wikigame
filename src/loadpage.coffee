@@ -11,6 +11,7 @@ class LoadPage extends Phaser.State
   constructor: -> super
 
   init: (@pageTitle) ->
+    console.log @pageTitle
     return
 
   create: ->

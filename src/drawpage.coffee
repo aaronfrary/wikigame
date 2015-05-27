@@ -18,6 +18,7 @@ class DrawPage extends Phaser.State
   constructor: -> super
 
   init: (@words) ->
+    console.log @words.length + ' words'
     @x = @y = spacing.padding
     @lastType = null
     @blocks = []

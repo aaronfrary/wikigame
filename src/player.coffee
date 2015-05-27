@@ -41,7 +41,6 @@ class Player extends Phaser.Sprite
   onPlatform: (platform) ->
     # Hyperlink
     if @game.cursors.down.isDown and @body.touching.down and platform.link?
-      console.log platform.link
       @game.state.start('LoadPage', true, false, platform.link)
 
 
