@@ -31,6 +31,7 @@ module.exports = (grunt) ->
     coffeelint:
       app: ['./src/*.coffee']
       options:
+        force: true
         no_empty_functions: {level: 'warn'}
         no_stand_alone_at: {level: 'warn'}
         missing_fat_arrows: {level: 'warn'}
