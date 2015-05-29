@@ -32,17 +32,6 @@ class Word extends Phaser.Text
     if word.t is type.TITLE3
       style.fontSize = wordCfg.size.t3
 
-    NEWLINE: 1
-    PRE:     2
-    POST:    3
-    WORD:    4
-    LINK:    5
-    TITLE1:  6
-    TITLE2:  7
-    TITLE3:  8
-    BOLD:    9
-    ITAL:    10
-
     super(game, x, y, text, style)
 
     @link = word.link
