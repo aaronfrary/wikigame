@@ -15,10 +15,6 @@ class Player extends Phaser.Sprite
     @body.bounce.y = playerCfg.bounce
     @body.collideWorldBounds = true
 
-    @body.setSize(28, 40, 2, 8)
-
-    @animations.add('left', [0, 1, 2, 3], 10, true)
-    @animations.add('right', [5, 6, 7, 8], 10, true)
     @platform = null
 
   update: ->
