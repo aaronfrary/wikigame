@@ -11,16 +11,22 @@ Phaser = require 'phaser'
 {spacing, type} = require './config.coffee'
 Word = require './word.coffee'
 
-chunkSize = 200
 
 class DrawPage extends Phaser.State
 
   constructor: -> super
 
+  # Helper function
+  drawHoriz: (y) ->
+    gfx = @add.graphics(0, 0)
+    gfx.lineStyle(1, 0x808080, 1)
+    gfx.moveTo(spacing.padding, y)
+    gfx.lineTo(spacing.length, y)
+
   init: (@words) ->
     console.log @words.length + ' words'
     @x = @y = spacing.padding
-    @lastType = null
+    @lastType = type.NEWLINE
     @blocks = []
     @idx = 0
     @numBlocks = 1 + @words.length // spacing.blockSize
@@ -41,7 +47,7 @@ class DrawPage extends Phaser.State
       @loadSprite.destroy()
       return @state.start('Game', false, false, @blocks)
 
-    # Create one block of words
+    # Create one block of words per call to update()
     block =
       group: new Phaser.Group(@game, null)
       onScreen: false
@@ -49,13 +55,22 @@ class DrawPage extends Phaser.State
       bottom: @y
     for i in [0 ... spacing.blockSize]
       word = @words[@idx++]
-      if @idx >= @words.length
+      if @idx > @words.length
         break
+
       # NEWLINE does not generate text
       if word.t is type.NEWLINE
         @x = spacing.padding
-        @y += spacing.paragraph / 2
+        @y += switch @lastType
+          when type.TITLE0
+            spacing.beforeTagline
+          when type.TAGLINE, type.TITLE1, type.TITLE2, type.TITLE3
+            spacing.afterTitle
+          else
+            spacing.paragraph
+        @lastType = word.t
         continue
+
       # No spacing between word and punctuation
       if @lastType is type.PRE or word.t is type.POST
         @x -= spacing.word
@@ -63,15 +78,24 @@ class DrawPage extends Phaser.State
       else if @x > spacing.length
         @x = spacing.padding
         @y += spacing.line
+
       # Create text
       @w = new Word(@game, @x, @y, word)
       block.group.add @w
+
+      # Add lines under titles
+      if @lastType is type.NEWLINE and (word.t is type.TITLE0 or
+                                        word.t is type.TITLE1)
+        @drawHoriz @w.bottom
+
       @x += @w.width + spacing.word
       @lastType = word.t
 
+    # Finish block
     block.bottom = @y
     @blocks.push block
 
+    # Update loading bar
     @loadRect.width = Math.floor(@loadWidth * @blocks.length / @numBlocks)
     @loadSprite.updateCrop()
 

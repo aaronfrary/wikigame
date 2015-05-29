@@ -3,7 +3,7 @@
 ###
 
 module.exports =
-  width: 960
+  width: 820
   height: 640
   pack: 'assets/pack.json'
 
@@ -34,7 +34,7 @@ module.exports =
       t3: 28
       t2: 32
       t1: 40
-      t0: 48
+      t0: 52
     linkColor:
       blue:      '#0645AD'
       darkBlue:  '#0B0080'
@@ -45,11 +45,13 @@ module.exports =
       purple:    '#663366'
 
   spacing:
-    length: 1500
+    length: 1400
     padding: 300
     word: 50
     line: 130
     paragraph: 200
+    afterTitle: 100
+    beforeTagline: 78
     blockSize: 200
 
   type:
@@ -64,4 +66,4 @@ module.exports =
     TITLE3:  9
     BOLD:    10
     ITAL:    11
-    NOTE:    12
+    TAGLINE: 12

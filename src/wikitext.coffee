@@ -70,9 +70,9 @@ parse = (title, text) ->
   # Break down by paragraph / section
   sections = (preprocess text).split '\n'
 
-  tokens = (parseText type.TITLE0, title)
+  tokens = parseText type.TITLE0, title
   tokens.push {t: type.NEWLINE}
-  tokens = tokens.concat (parseText type.NOTE, tagline)
+  tokens.push {t: type.TAGLINE, w: tagline}
   tokens.push {t: type.NEWLINE}
 
   for sec in sections
@@ -100,7 +100,8 @@ parse = (title, text) ->
           tokens.push {t: type.PRE, w: m}
         when (m = match[9])?
           tokens.push {t: type.WORD, w: m}
-    tokens.push {t: type.NEWLINE}
+    if tokens[tokens.length - 1].t isnt type.NEWLINE
+      tokens.push {t: type.NEWLINE}
 
   return tokens
 

@@ -19,7 +19,7 @@ class Word extends Phaser.Text
       style.fontStyle = 'italic'
     if word.t is type.BOLD
       style.fontWeight = 'bold'
-    if word.t is type.NOTE
+    if word.t is type.TAGLINE
       style.fontSize = wordCfg.size.note
     if word.t is type.TITLE0
       style.font = 'Serif'
