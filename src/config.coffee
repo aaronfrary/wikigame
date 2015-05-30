@@ -23,6 +23,7 @@ module.exports =
     mass: 10
     acceleration: 60
     maxSpeed: 240
+    maxFallSpeed: 2000
     jumpSpeed: 500
     jumpTime: 600
     bounce: 0

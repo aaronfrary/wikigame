@@ -16,7 +16,7 @@ class Player extends Phaser.Sprite
     @game.physics.arcade.enable this
     @body.mass = playerCfg.mass
     @body.maxVelocity.x = playerCfg.maxSpeed
-    @body.maxVelocity.y = 1000
+    @body.maxVelocity.y = playerCfg.maxFallSpeed
     @body.bounce.y = playerCfg.bounce
     @body.collideWorldBounds = true
 
