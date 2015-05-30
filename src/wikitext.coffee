@@ -47,6 +47,7 @@ parseLink = (text) ->
   if segs.length > 2
     return [] # TODO: we should handle some of these
   [link, ..., text] = segs
+  link = link[0].toUpperCase() + link[1..]
   text.split(/\s/).map (s) ->
     t: type.LINK
     w: s
