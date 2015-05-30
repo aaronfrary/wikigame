@@ -12,7 +12,7 @@ module.exports =
   startPage: 'Cruft'
   tagline: 'From Wikipedia, the free encyclopedia'
 
-  gravity: 600
+  gravity: 800
 
   camera:
     slack: 50
@@ -21,7 +21,8 @@ module.exports =
   playerCfg:
     mass: 10
     speed: 240
-    jumpHeight: 420
+    jumpSpeed: 500
+    jumpTime: 600
     bounce: 0
 
   wordCfg:

@@ -16,6 +16,16 @@ class Player extends Phaser.Sprite
     @body.collideWorldBounds = true
 
     @platform = null
+    @jumpEvent = null
+
+  jump: ->
+    @jumping = true
+    @body.velocity.y = -1 * playerCfg.jumpSpeed
+    @jumpEvent = @game.time.events.add(playerCfg.jumpTime, @endJump, this)
+
+  endJump: ->
+    @body.velocity.y = Math.max(@body.velocity.y / 2, @body.velocity.y)
+    @jumping = false
 
   update: ->
     @body.velocity.x = 0
@@ -29,10 +39,13 @@ class Player extends Phaser.Sprite
       else
         @animations.stop()
         @frame = 4
+        
+    if @jumping and not @game.cursors.up.isDown
+      @game.time.events.remove(@jumpEvent)
+      @endJump()
 
-    # Jump
     if @game.cursors.up.isDown and @body.touching.down
-      @body.velocity.y = -1 * playerCfg.jumpHeight
+      @jump()
 
   onPlatform: (platform) ->
     # Hyperlink
