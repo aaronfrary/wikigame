@@ -1,5 +1,3 @@
-wikitext = require "./wikitext.coffee"
-
 ###
 # Fetch a Wikipedia page using JSONP.
 #
@@ -8,26 +6,29 @@ wikitext = require "./wikitext.coffee"
 # Wikimedia people mad.
 ###
 
-getJSONP = (url, callback) ->
+getJSONP = (url, succeed, fail, context) ->
   ud = '_' + +new Date
   script = document.createElement 'script'
   head = (document.getElementsByTagName 'head')[0] || document.documentElement
 
+  finished = 'finished' + ud
+  window[finished] = false
   window[ud] = (data) ->
+    window[finished] = true
     head.removeChild script
-    callback && (callback data)
+    succeed && succeed.call(context, data)
 
   script.src = url + '&callback=' + ud
   head.appendChild script
 
+  setTimeout((->
+    fail.call(context, new Error('Network Error')) unless window[finished]),
+    5000)
+
 module.exports =
 
-  getPage: (title, callback) ->
+  getPage: (title, succeed, fail, context) ->
     url = "https://en.wikipedia.org/w/api.php?action=query" +
           "&titles=#{title}&prop=revisions&rvprop=content&continue=" +
           "&format=json&formatversion=2"
-    onload = (data) ->
-      content = wikitext.parse(title, data.query.pages[0].revisions[0].content)
-      callback content
-    getJSONP(url, onload)
-
+    getJSONP(url, succeed, fail, context)

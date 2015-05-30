@@ -6,18 +6,24 @@ Phaser = require 'phaser'
 
 config = require './config.coffee'
 wikipedia = require './wikipedia.coffee'
+wikitext = require './wikitext.coffee'
 
 class LoadPage extends Phaser.State
   constructor: -> super
 
-  init: (@pageTitle) ->
-    console.log @pageTitle
+  init: (@title) ->
+    console.log @title
     return
 
   create: ->
-    wikipedia.getPage(@pageTitle, (page) =>
+    succeed = (data) ->
+      page = wikitext.parse(@title, data.query.pages[0].revisions[0].content)
       @state.start('DrawPage', true, false, page)
-    )
+
+    fail = (error) ->
+      @state.start('Menu', true, false, error)
+
+    wikipedia.getPage(@title, succeed, fail, this)
 
 module.exports = LoadPage
 
