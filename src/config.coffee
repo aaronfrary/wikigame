@@ -50,7 +50,7 @@ module.exports =
 
   spacing:
     length: 1400
-    padding: 300
+    padding: 600
     word: 50
     line: 130
     paragraph: 200

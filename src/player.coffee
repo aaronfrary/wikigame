@@ -54,10 +54,17 @@ class Player extends Phaser.Sprite
     if @game.cursors.up.isDown and @canJump
       @jump()
 
+    # Have we hit the bottom?
+    if @body.blocked.down and not @body.touching.down
+      @onKilled()
+
   onPlatform: (platform) ->
     # Hyperlink
     if @game.cursors.down.isDown and @body.touching.down and platform.link?
       @game.state.start('LoadPage', true, false, platform.link)
 
+  onKilled: ->
+    # Placeholder:
+    @game.state.start('Menu', true, false, 'You died!')
 
 module.exports = Player
