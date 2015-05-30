@@ -32,13 +32,8 @@ class Player extends Phaser.Sprite
     switch
       when @game.cursors.left.isDown
         @body.velocity.x = -1 * playerCfg.speed
-        @animations.play 'left'
       when @game.cursors.right.isDown
         @body.velocity.x = playerCfg.speed
-        @animations.play 'right'
-      else
-        @animations.stop()
-        @frame = 4
         
     if @jumping and not @game.cursors.up.isDown
       @game.time.events.remove(@jumpEvent)
