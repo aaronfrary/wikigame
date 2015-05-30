@@ -2,6 +2,9 @@ Phaser = require "phaser"
 
 ###
 # Class for player sprite. Handles user input.
+#
+# Features smooth acceleration with instant stopping, jump height controlled by
+# length of button press, and allows a single air-jump after falling.
 ###
 
 {playerCfg} = require './config.coffee'
@@ -12,6 +15,8 @@ class Player extends Phaser.Sprite
     super(game, x, y, 'player')
     @game.physics.arcade.enable this
     @body.mass = playerCfg.mass
+    @body.maxVelocity.x = playerCfg.maxSpeed
+    @body.maxVelocity.y = 1000
     @body.bounce.y = playerCfg.bounce
     @body.collideWorldBounds = true
 
@@ -31,12 +36,13 @@ class Player extends Phaser.Sprite
     @jumping = false
 
   update: ->
-    @body.velocity.x = 0
     switch
       when @game.cursors.left.isDown
-        @body.velocity.x = -1 * playerCfg.speed
+        @body.velocity.x -= playerCfg.acceleration
       when @game.cursors.right.isDown
-        @body.velocity.x = playerCfg.speed
+        @body.velocity.x += playerCfg.acceleration
+      else
+        @body.velocity.x = 0
 
     if @body.touching.down
       @canJump = true

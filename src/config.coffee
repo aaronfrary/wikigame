@@ -20,7 +20,8 @@ module.exports =
 
   playerCfg:
     mass: 10
-    speed: 240
+    acceleration: 60
+    maxSpeed: 240
     jumpSpeed: 500
     jumpTime: 600
     bounce: 0
