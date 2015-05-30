@@ -34,7 +34,6 @@ module.exports = (grunt) ->
         force: true
         no_empty_functions: {level: 'warn'}
         no_stand_alone_at: {level: 'warn'}
-        missing_fat_arrows: {level: 'warn'}
 
     connect:
       app:
