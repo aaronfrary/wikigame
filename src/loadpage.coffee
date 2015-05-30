@@ -16,6 +16,14 @@ class LoadPage extends Phaser.State
     return
 
   create: ->
+    x = @game.world.centerX
+    y = @game.world.centerY
+    message = 'Loading...'
+    fontSize = 32
+    fill = '#000'
+    text = @add.text(x, y, message, {fontSize, fill})
+    text.anchor.setTo(0.5, 0.5)
+
     succeed = (data) ->
       page = wikitext.parse(@title, data.query.pages[0].revisions[0].content)
       @state.start('DrawPage', true, false, page)
