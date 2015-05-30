@@ -8,6 +8,7 @@ module.exports =
   pack: 'assets/pack.json'
 
   debug: true
+  loadTimeout: 4000
 
   startPage: 'Cruft'
   tagline: 'From Wikipedia, the free encyclopedia'

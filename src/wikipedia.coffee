@@ -1,3 +1,5 @@
+config = require './config.coffee'
+
 ###
 # Fetch a Wikipedia page using JSONP.
 #
@@ -23,7 +25,7 @@ getJSONP = (url, succeed, fail, context) ->
 
   setTimeout((->
     fail.call(context, new Error('Network Error')) unless window[finished]),
-    5000)
+    config.loadTimeout)
 
 module.exports =
 
