@@ -4,7 +4,7 @@ Phaser = require "phaser"
 # Generates a solid text sprite from a word object.
 ###
 
-{wordCfg, type} = require './config.coffee'
+{wordCfg, color, type} = require './config.coffee'
 
 class Word extends Phaser.Text
 
@@ -14,7 +14,7 @@ class Word extends Phaser.Text
     style[k] = v for k,v of wordCfg.defaultStyle
 
     if word.t is type.LINK
-      style.fill = wordCfg.linkColor.blue
+      style.fill = color.blue
     if word.t is type.ITAL
       style.fontStyle = 'italic'
     if word.t is type.BOLD
@@ -39,5 +39,12 @@ class Word extends Phaser.Text
     @game.physics.arcade.enable this
     @body.allowGravity = false
     @body.immovable = true
+
+    # HACK
+    h = @body.height
+    w = @body.width
+    dht = @body.height / 5
+    dhb = @body.height / 3
+    @body.setSize(w, h - dht - dhb, 0, dht)
 
 module.exports = Word

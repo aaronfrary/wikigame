@@ -39,14 +39,6 @@ module.exports =
       t2: 32
       t1: 40
       t0: 52
-    linkColor:
-      blue:      '#0645AD'
-      darkBlue:  '#0B0080'
-      red:       '#CC2200'
-      lightRed:  '#A55858'
-      brown:     '#772233'
-      lightBlue: '#3366BB'
-      purple:    '#663366'
 
   spacing:
     length: 1400
@@ -57,6 +49,15 @@ module.exports =
     afterTitle: 100
     beforeTagline: 78
     blockSize: 200
+
+  color:
+    blue:      '#0645AD'
+    darkBlue:  '#0B0080'
+    red:       '#CC2200'
+    lightRed:  '#A55858'
+    brown:     '#772233'
+    lightBlue: '#3366BB'
+    purple:    '#663366'
 
   type:
     NEWLINE: 1
