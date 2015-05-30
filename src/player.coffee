@@ -17,9 +17,12 @@ class Player extends Phaser.Sprite
 
     @platform = null
     @jumpEvent = null
+    @jumping = false
+    @canJump = false
 
   jump: ->
     @jumping = true
+    @canJump = false
     @body.velocity.y = -1 * playerCfg.jumpSpeed
     @jumpEvent = @game.time.events.add(playerCfg.jumpTime, @endJump, this)
 
@@ -34,12 +37,15 @@ class Player extends Phaser.Sprite
         @body.velocity.x = -1 * playerCfg.speed
       when @game.cursors.right.isDown
         @body.velocity.x = playerCfg.speed
+
+    if @body.touching.down
+      @canJump = true
         
     if @jumping and not @game.cursors.up.isDown
       @game.time.events.remove(@jumpEvent)
       @endJump()
 
-    if @game.cursors.up.isDown and @body.touching.down
+    if @game.cursors.up.isDown and @canJump
       @jump()
 
   onPlatform: (platform) ->
