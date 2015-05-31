@@ -1,0 +1,21 @@
+{
+  "boot": [
+    {
+      "type": "image",
+      "key": "preloadBar",
+      "url": "assets/image/preload-bar.png"
+    }
+  ],
+  "main": [
+    {
+      "type": "image",
+      "key": "wikipediaLogo",
+      "url": "assets/image/wikipedia-logo.svg"
+    },
+    {
+      "type": "image",
+      "key": "player",
+      "url": "assets/image/player.png"
+    }
+  ]
+}
