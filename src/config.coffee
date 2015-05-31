@@ -23,7 +23,7 @@ module.exports =
     mass: 10
     acceleration: 60
     maxSpeed: 240
-    maxFallSpeed: 2000
+    maxFallSpeed: 1600
     jumpSpeed: 500
     jumpTime: 600
     bounce: 0
@@ -41,7 +41,7 @@ module.exports =
       t0: 52
 
   spacing:
-    length: 1400
+    length: 1500
     padding: 600
     word: 50
     line: 130
