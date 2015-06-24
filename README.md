@@ -1,4 +1,5 @@
 # Wikigame
+_(Name subject to change)_
 
 Have you ever dreamed of being a tiny person who can run around in web pages
 and jump through hyperlinks? Now you can!
