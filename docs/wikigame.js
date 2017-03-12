@@ -155,7 +155,7 @@ module.exports = {
   playerCfg: {
     mass: 10,
     acceleration: 60,
-    maxSpeed: 240,
+    maxSpeed: 300,
     maxFallSpeed: 1600,
     jumpSpeed: 500,
     jumpTime: 600,
@@ -579,6 +579,7 @@ Player = (function(superClass) {
     this.body.maxVelocity.y = playerCfg.maxFallSpeed;
     this.body.bounce.y = playerCfg.bounce;
     this.body.collideWorldBounds = true;
+    this.anchor.setTo(0.5, 0.5);
     this.platform = null;
     this.jumpEvent = null;
     this.jumping = false;
@@ -601,9 +602,11 @@ Player = (function(superClass) {
     switch (false) {
       case !this.game.cursors.left.isDown:
         this.body.velocity.x -= playerCfg.acceleration;
+        this.scale.x = 1;
         break;
       case !this.game.cursors.right.isDown:
         this.body.velocity.x += playerCfg.acceleration;
+        this.scale.x = -1;
         break;
       default:
         this.body.velocity.x = 0;
