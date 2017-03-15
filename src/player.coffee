@@ -40,10 +40,10 @@ class Player extends Phaser.Sprite
     switch
       when @game.cursors.left.isDown
         @body.velocity.x -= playerCfg.acceleration
-        @scale.x = 1
+        @scale.x = -1
       when @game.cursors.right.isDown
         @body.velocity.x += playerCfg.acceleration
-        @scale.x = -1
+        @scale.x = 1
       else
         @body.velocity.x = 0
 

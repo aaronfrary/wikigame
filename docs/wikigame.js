@@ -602,11 +602,11 @@ Player = (function(superClass) {
     switch (false) {
       case !this.game.cursors.left.isDown:
         this.body.velocity.x -= playerCfg.acceleration;
-        this.scale.x = 1;
+        this.scale.x = -1;
         break;
       case !this.game.cursors.right.isDown:
         this.body.velocity.x += playerCfg.acceleration;
-        this.scale.x = -1;
+        this.scale.x = 1;
         break;
       default:
         this.body.velocity.x = 0;
